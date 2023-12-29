@@ -1,0 +1,47 @@
+{% extends "ProyectoWebApp/base.html" %}
+{% load static %}
+{% block content %}
+
+<div style="color: white; text-align: right; margin-right: 100px;">
+   
+    {% if user.is_authenticated %}
+    Hola {{ user.username }} &nbsp; &nbsp; 
+    <a href="{% url 'cerrar_session' %}" style="color: white;">Cerrar sesion</a>&nbsp; &nbsp;
+    <a href="{% url 'perfil' %}" style="color: white;">Perfil</a>
+    {% else %}
+    <a href="{% url 'logear'%}" style="color: white;">Login</a> &nbsp; &nbsp; 
+    <a href="{% url 'Registrarse' %}" style="color: white;">Registrate</a> 
+    {% endif %}
+    </div>
+    
+<div class="container">
+    <div style="float:right;">
+        <p style="color: white;"></p>
+        {% if request.user.is_authenticated %}
+            {% include "asignaciondecursos/widget.html" %}
+        {% else %}
+            <div class="alert alert-danger text-center">Se requiere inicio de sesión para asisgnarse cursos</div>
+        {% endif %}
+    </div>
+
+  <div class="row">
+
+{% for curso in cursos %}
+
+    <div class="col-md-3">
+        <div class="card" style="width: 100%; margin: 50px 10px;">
+        <img src="{{curso.imagen.url}}" class="card-img-top">
+        <div class="card-body" style="text-align: center;">
+            <h7 class="card-tittle">{{curso.nombre}}</h7>
+            <p class="card-text">{{curso.precio}}&nbsp;Q</p>
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'asignaciondecursos:agregar' curso.id %}" class="btn btn-success">Agregar Curso</a>
+        </div>
+        </div>
+    </div>
+
+{% endfor %}
+  </div>
+</div>
+{% endblock %}

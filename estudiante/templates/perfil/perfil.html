@@ -1,0 +1,92 @@
+{% extends "ProyectoWebApp/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container my-3 mb-5">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- CARD DATOS DE PERFIL -->
+                <div class="card border rounded-2 shadow p-3 mb-3">
+                    <div class="card-body">
+                        <img class="img-thumbnail rounded-circle mb-3" src="{% static 'ProyectoWebApp/img/avatar2.jpg' %}" style="width: 100px;">
+                        <h2>DATOS DE PERFIL</h2>
+                        <h4><span class="badge {{ color }}">{{ group_name_singular | capfirst }}</span></h4>
+                        <hr>
+                        <p><strong>Nombre de usuario: </strong>{{ user.username}}</p>
+                        <p><strong>Nombre: </strong>{{ user.first_name}}</p>
+                        <p><strong>Nombre de usuario: </strong>{{ user.last_name}}</p>
+                        <p><strong>Correo electrónico:  </strong>{{ user.email }}</p>
+                        {% if user.estudiantes %}
+                            <p><strong>Cui:  </strong>{{ user.cui }}</p>
+                        {% else %}
+                            <p><strong>Cui:  </strong>No disponible</p>
+                        {% endif %}
+
+                        <hr>
+
+                        {% if request.user.username == 'admin'  %}
+                            <a class="btn btn-warning w-100 mb-1" href="{% url 'admin:index' %}">Ir al Admin</a>
+                        {% endif %}
+                        
+                        </button>
+                        <p></p><a class="btn btn-warning w-100" href="{% url 'Estudiante' %}">Regresar a ver cursos</a></p>
+                    </button>
+                    <p></p><a class="btn btn-info w-100" href="{% url 'descargar' %}">Descargar Cursos</a></p>
+                        </button>
+                        <p></p><a class="btn btn-danger w-100" href="{% url 'cerrar_session' %}">Cerrar sesión</a></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Nuevo cuadro a la derecha -->
+            <div class="col-md-4">
+                <div class="card border rounded-2 shadow p-3 mb-3">
+                    <div class="card-body">
+                        <h2>CURSOS ASIGNADOS</h2>
+                        {% if request.session.asignaciondecursos.items %}
+                            <ul>
+                                {% for key, value in request.session.asignaciondecursos.items %}
+                                    <li>{{value.nombre}}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No hay cursos asignados.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nuevo cuadro a la derecha -->
+            <div class="col-md-4">
+                <div class="card border rounded-2 shadow p-3 mb-3">
+                    <div class="card-body">
+                        <h2>DETALLE DE FACTURACIÓN</h2>
+                        {% if request.session.asignaciondecursos.items %}
+                            <ul>
+                                {% for key, value in request.session.asignaciondecursos.items %}
+                                    <li>{{value.nombre}}</li>
+                                    <td>Q {{value.precio}}</td>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No hay cursos asignados.</p>
+                        {% endif %}
+                        <p>Total: Q {{importe_total_asignaciondecursos}} </p>
+
+                    </button>
+                    <p></p><a class="btn btn-warning w-100" href="{% url 'Pagar' %}">PAGAR</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

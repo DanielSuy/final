@@ -1,0 +1,27 @@
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4"><center>DETALLE DE CURSOS</center></h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Curso</th>
+                <th scope="col">Capacidad</th>
+                <th scope="col">Precio Unitario</th>
+            </tr>
+        </thead>
+        <tbody>
+				{% for curso in cursos %}
+					<tr>
+						<th scope="col">{{ curso.nombre }}</th>
+						<th scope="col">100</th>  <!-- La cantidad podría provenir de algún lugar, aquí se establece en 1 como ejemplo -->
+						<th scope="col">Q{{ curso.precio }}</th>
+					</tr>
+				{% endfor %}
+        </tbody>
+    </table>
+
+    <p class="mt-4"><center>Academia de Ingeniería. ¡Esperamos que disfrute de sus cursos!</center></p>
+</div>
+{% endblock %}
+
+
